@@ -1,6 +1,6 @@
 #ifndef TRUCK_H
 #define TRUCK_H
-//#include "goodshandler.h"
+#include "goodshandler.h"
 #include<string>
 using namespace std;
 
@@ -13,15 +13,15 @@ private:
     float volume;
     bool avaliable;
     string currentLocation;
-    //GoodsHandler goodsHandler;
+    GoodsHandler goodsHandler;
 
 
 public:
     Truck(string id, float maxWeight, float volume);
 
 
-    //void loadGood(Goods* goods);
-    // Goods* getGoods(string id);
+    void loadGood(Goods* goods);
+    Goods* getGoods(string id);
     void changeDestination(string destination);
     string getDestination()const;
     float getVolume()const;

@@ -7,6 +7,16 @@ Truck::Truck(string id, float maxWeight, float volume)
 	this->volume = volume;
 }
 
+void Truck::loadGood(Goods * goods)
+{
+	this->goodsHandler.addGoods(goods);
+}
+
+Goods * Truck::getGoods(string id)
+{
+	return goodsHandler.selectGoods(id);
+}
+
 void Truck::changeDestination(string destination)
 {
 	this->destination = destination;

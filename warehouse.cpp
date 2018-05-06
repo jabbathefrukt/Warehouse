@@ -12,6 +12,16 @@ bool WareHouse::findGoods(string id)
 	return false;
 }
 
+void WareHouse::loadTruck(Goods * goods)
+{
+	activeTruck->loadGood(goods);
+}
+
+Goods * WareHouse::getGoods(string id)
+{
+	return goodsHandler.selectGoods(id);
+}
+
 string WareHouse::getId() const
 {
 	return this->id;
