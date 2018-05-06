@@ -10,7 +10,7 @@ private:
     WareHouse** wareHouses;
     
 public:
-    WareHouseHandler();
+    WareHouseHandler(int capacity);
     WareHouse* selectWareHouse(string id);
     void addWareHouse(string id, string name);
     bool removeWareHouse(string id);

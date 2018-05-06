@@ -1,41 +1,47 @@
 #include "warehouse.h"
 
-WareHouse::WareHouse()
+WareHouse::WareHouse(string id, string name)
 {
-
+	this->id = id;
+	this->name = name;
 }
 
-/*
 bool WareHouse::findGoods(string id)
 {
-
+	//for(int i = 0; i <)
+	return false;
 }
-void WareHouse::loadTruck(Truck* truck, Goods)
+
+string WareHouse::getId() const
 {
-
+	return this->id;
 }
-Goods* WareHouse::getGoods(string id)
+
+bool WareHouse::addTruck(string id, float maxW, float volume)
 {
-
+	bool temp;
+	temp = truckHanler.addTruck(id, maxW, volume);
+	return temp;
 }
-bool WareHouse::addTruck()
+
+bool WareHouse::removeTruck(string id)
 {
-
+	bool temp;
+	temp = truckHanler.removeTruck(id);
+	return temp;
 }
-bool WareHouse::removeTruck()
-{
 
-}
 void WareHouse::addGoods(string id)
 {
-
+	//
 }
+
 bool WareHouse::removeGoods()
 {
-
+	return true; //
 }
-Truck* WareHouse::selecetTruck(string id)
+
+Truck * WareHouse::selecetTruck(string id)
 {
-
+	return truckHanler.selectTruck(id);
 }
-*/
