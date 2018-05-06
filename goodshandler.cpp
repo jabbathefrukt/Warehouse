@@ -16,7 +16,7 @@ void GoodsHandler::expand()
 Goods * GoodsHandler::selectGoods(string id)
 {
 	for (int i = 0; i < nrOfGoods; i++) {
-		if (goods[i]->getId == id) {
+		if (goods[i]->getId() == id) {
 			return goods[i];
 		}
 	}
@@ -36,7 +36,7 @@ bool GoodsHandler:: removeGoods(string id)
 {
 	bool result = false;
 	for (int i = 0; i < nrOfGoods; i++) {
-		if (goods[i]->getId == id) {
+		if (goods[i]->getId() == id) {
 			delete goods[i];
 			goods[i] = goods[--nrOfGoods];
 			goods[nrOfGoods] = nullptr;

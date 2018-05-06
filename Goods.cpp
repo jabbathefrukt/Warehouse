@@ -1,9 +1,5 @@
 #include "goods.h"
 
-Goods::Goods()
-{
-
-}
 
 
 Goods::Goods(string id, float weight)
