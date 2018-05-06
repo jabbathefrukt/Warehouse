@@ -24,13 +24,10 @@ Goods * GoodsHandler::selectGoods(string id)
 }
 
 
-void GoodsHandler:: addGoods(string id, float weight)
+void GoodsHandler:: addGoods(Goods*goods)
 {
 	//expand;
-
-	if (selectGoods(id) == nullptr) {
-		goods[nrOfGoods++] = new Goods(id, weight);
-	}
+		this->goods[nrOfGoods++] = goods;
 }
 bool GoodsHandler:: removeGoods(string id)
 {

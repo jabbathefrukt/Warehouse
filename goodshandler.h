@@ -16,7 +16,7 @@ public:
 	GoodsHandler();
 
 	Goods* selectGoods(string id);
-	void addGoods(string id, float weight);
+	void addGoods(Goods*goods);
 	bool removeGoods(string id);
 	int getNrOfGoods()const;
 };
