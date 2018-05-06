@@ -9,16 +9,12 @@ private:
     int capacity;
     Truck** trucks;
 public:
-    TruckHandler();
+    TruckHandler(int capacity = 10);
 
-    /*
     Truck* selectTruck(string id);
     bool addTruck(string id, float maxW, float volume);
     bool removeTruck(string id);
     int getNrOfTrucks()const;
-    void loadTrucks(Goods* goods, string id);
-
-    */
 };
 
 #endif // TRUCKHANDLER_H
