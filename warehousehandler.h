@@ -2,6 +2,10 @@
 #define WAREHOUSEHANDLER_H
 #include "warehouse.h"
 #include<fstream>
+#include<QFile>
+#include<QTextStream>
+#include<QMessageBox>
+#include<qdebug.h>
 using namespace std;
 class WareHouseHandler
 {

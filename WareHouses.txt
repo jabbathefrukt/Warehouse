@@ -1,6 +1,11 @@
 5
-Kristainstad 100
-Karskrona 101
-Bergåsa 102
-Lund 103
-Malmö 104
+Kristainstad
+100
+Karskrona
+101
+Bergåsa
+102
+Lund
+103
+Malmö
+104

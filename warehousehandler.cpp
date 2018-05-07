@@ -24,7 +24,7 @@ WareHouseHandler::~WareHouseHandler()
 WareHouse * WareHouseHandler::selectWareHouse(string id)
 {
 	int index = -1;
-	for (int i = 0; i < this-> nrOfWareHouses && index == -1; i++)
+    for (int i = 0; i < this->nrOfWareHouses && index == -1; i++)
 	{
 		if (wareHouses[i]->getId() == id)
 		{
@@ -90,37 +90,46 @@ int WareHouseHandler::getNrOfWareHouses() const
 
 void WareHouseHandler::loadWareHousesFromFile()
 {
-	std::ifstream openFile("WareHouses.txt");
-	openFile >> this->nrOfWareHouses;
-	wareHouses = new WareHouse*[this->nrOfWareHouses];
+    QFile file("D:\\qt projects\\untitled\\WareHouses.txt");
+    if(!file.open(QIODevice::ReadOnly))
+    {
+        QMessageBox::information(0,"error",file.errorString());
+    }
+    QTextStream in(&file);
+    QString mText = in.readLine();
+    int temp = mText.toInt();
+    this->nrOfWareHouses = temp;
+    wareHouses = new WareHouse*[this->nrOfWareHouses];
+    for(int i = 0; i < this->nrOfWareHouses; i++)
+    {
+        mText = in.readLine();
+        string temp1;
+        temp1 = mText.toStdString();
 
-	if (openFile.is_open())
-	{
-		for (int i = 0; i <this->nrOfWareHouses; i++)
-		{
-			string names;
-			string id;
-			openFile >> names;
-			openFile >> id; //kanske läs in direkt från filen;
-			wareHouses[i] = new WareHouse(id, names);
-		}
-	}
-	openFile.close();
+        mText = in.readLine();
+        string temp2;
+        temp2 = mText.toStdString();
+        wareHouses[i] = new WareHouse(temp2, temp1);
+    }
+     in.flush();
 }
 
 void WareHouseHandler::saveWareHousesToFile()
 {
-	std::ofstream myfile;
-	myfile.open("WareHouses.txt");
-
-	if (myfile.is_open())
-	{
-		myfile << nrOfWareHouses << '\n';
-
-		for (int i = 0; i < this->nrOfWareHouses; i++)
-		{
-			myfile << wareHouses[i]->getId() << " " << wareHouses[i]->getName() << '\n';
-		}
-		myfile.close();
-	}
+    QFile saveFile("D:\\qt projects\\untitled\\WareHouses.txt");
+    if(!saveFile.open(QFile::WriteOnly| QFile::Text))
+    {
+       QMessageBox::information(0,"error",saveFile.errorString());
+       return;
+    }
+    QTextStream out(&saveFile);
+    out << this->nrOfWareHouses << endl;
+    for(int i = 0; i < this->nrOfWareHouses; i++)
+    {
+       QString temp;
+      // temp = QString::fromStdString(wareHouses[i]->getName());
+       out << QString::fromStdString(wareHouses[i]->getName()) << endl;
+       out << QString::fromStdString(wareHouses[i]->getId()) << endl;
+    }
+    saveFile.flush();
 }

@@ -4,8 +4,8 @@ WareHouse::WareHouse(string id, string name)
 {
 	this->id = id;
 	this->name = name;
-	truckHanler.readFromFile(this->name);
-	truckHanler.saveToFile(this->name); // ta bort senare
+    //truckHanler.readFromFile(this->name);
+    //truckHanler.saveToFile(this->name); // ta bort senare
 }
 
 WareHouse::~WareHouse()

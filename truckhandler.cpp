@@ -87,6 +87,7 @@ int TruckHandler::getNrOfTrucks() const
 
 void TruckHandler::readFromFile(string name)
 {
+    /*
 	string tempName = name;
 	tempName += "Trucks.txt";
 	std::ifstream openFile(tempName);
@@ -109,6 +110,36 @@ void TruckHandler::readFromFile(string name)
 		}
 	}
 	openFile.close();
+
+    */
+
+    /*
+    string tempName = "D:\\qt projects\\untitled\\";
+    += name;
+    tempName += "Trucks.txt";
+    QFile file("D:\\qt projects\\untitled\\Trucks.txt");
+    if(!file.open(QIODevice::ReadOnly))
+    {
+        QMessageBox::information(0,"error",file.errorString());
+    }
+    QTextStream in(&file);
+    QString mText = in.readLine();
+    int temp = mText.toInt();
+    this->nrOfWareHouses = temp;
+    wareHouses = new WareHouse*[this->nrOfWareHouses];
+    for(int i = 0; i < this->nrOfWareHouses; i++)
+    {
+        mText = in.readLine();
+        string temp1;
+        temp1 = mText.toStdString();
+
+        mText = in.readLine();
+        string temp2;
+        temp2 = mText.toStdString();
+        wareHouses[i] = new WareHouse(temp2, temp1);
+    }
+     in.flush();
+     */
 }
 
 void TruckHandler::saveToFile(string name)
