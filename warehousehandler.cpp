@@ -4,6 +4,21 @@ WareHouseHandler::WareHouseHandler(int capacity)
 {
 	this->capacity = capacity;
 	this->nrOfWareHouses = 0;
+
+	loadWareHousesFromFile();
+	//saveWareHousesToFile(); fungerar här men inte i destruktorn
+}
+
+WareHouseHandler::~WareHouseHandler()
+{
+	//saveWareHousesToFile();
+	for (int i = 0; i < this->nrOfWareHouses; i++)
+	{
+		delete wareHouses[i];
+	}
+	delete[] wareHouses;
+
+	//fungerar men endast om programmet avslutas vanligt och inte med att klicka ner programmet
 }
 
 WareHouse * WareHouseHandler::selectWareHouse(string id)
@@ -71,4 +86,41 @@ bool WareHouseHandler::removeWareHouse(string id)
 int WareHouseHandler::getNrOfWareHouses() const
 {
 	return this->nrOfWareHouses;
+}
+
+void WareHouseHandler::loadWareHousesFromFile()
+{
+	std::ifstream openFile("WareHouses.txt");
+	openFile >> this->nrOfWareHouses;
+	wareHouses = new WareHouse*[this->nrOfWareHouses];
+
+	if (openFile.is_open())
+	{
+		for (int i = 0; i <this->nrOfWareHouses; i++)
+		{
+			string names;
+			string id;
+			openFile >> names;
+			openFile >> id; //kanske läs in direkt från filen;
+			wareHouses[i] = new WareHouse(id, names);
+		}
+	}
+	openFile.close();
+}
+
+void WareHouseHandler::saveWareHousesToFile()
+{
+	std::ofstream myfile;
+	myfile.open("WareHouses.txt");
+
+	if (myfile.is_open())
+	{
+		myfile << nrOfWareHouses << '\n';
+
+		for (int i = 0; i < this->nrOfWareHouses; i++)
+		{
+			myfile << wareHouses[i]->getId() << " " << wareHouses[i]->getName() << '\n';
+		}
+		myfile.close();
+	}
 }

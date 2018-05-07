@@ -7,6 +7,10 @@ Truck::Truck(string id, float maxWeight, float volume)
 	this->volume = volume;
 }
 
+Truck::~Truck()
+{
+}
+
 void Truck::loadGood(Goods * goods)
 {
 	this->goodsHandler.addGoods(goods);

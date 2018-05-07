@@ -1,7 +1,8 @@
 #ifndef WAREHOUSEHANDLER_H
 #define WAREHOUSEHANDLER_H
 #include "warehouse.h"
-
+#include<fstream>
+using namespace std;
 class WareHouseHandler
 {
 private:
@@ -11,6 +12,7 @@ private:
     
 public:
     WareHouseHandler(int capacity);
+	~WareHouseHandler();
     WareHouse* selectWareHouse(string id);
     void addWareHouse(string id, string name);
     bool removeWareHouse(string id);

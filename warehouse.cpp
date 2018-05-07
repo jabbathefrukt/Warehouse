@@ -4,6 +4,13 @@ WareHouse::WareHouse(string id, string name)
 {
 	this->id = id;
 	this->name = name;
+	truckHanler.readFromFile(this->name);
+	truckHanler.saveToFile(this->name); // ta bort senare
+}
+
+WareHouse::~WareHouse()
+{
+	//truckHanler.saveToFile(this->name);
 }
 
 bool WareHouse::findGoods(string id)
@@ -55,3 +62,9 @@ Truck * WareHouse::selecetTruck(string id)
 {
 	return truckHanler.selectTruck(id);
 }
+
+string WareHouse::getName() const
+{
+	return this->name;
+}
+

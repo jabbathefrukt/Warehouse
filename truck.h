@@ -18,7 +18,7 @@ private:
 
 public:
     Truck(string id, float maxWeight, float volume);
-
+	~Truck();
 
     void loadGood(Goods* goods);
     Goods* getGoods(string id);
