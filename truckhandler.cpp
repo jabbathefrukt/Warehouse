@@ -113,11 +113,11 @@ void TruckHandler::readFromFile(string name)
 
     */
 
-    /*
+    
     string tempName = "D:\\qt projects\\untitled\\";
     += name;
     tempName += "Trucks.txt";
-    QFile file("D:\\qt projects\\untitled\\Trucks.txt");
+    QFile file(tempName);
     if(!file.open(QIODevice::ReadOnly))
     {
         QMessageBox::information(0,"error",file.errorString());
@@ -125,25 +125,27 @@ void TruckHandler::readFromFile(string name)
     QTextStream in(&file);
     QString mText = in.readLine();
     int temp = mText.toInt();
-    this->nrOfWareHouses = temp;
-    wareHouses = new WareHouse*[this->nrOfWareHouses];
-    for(int i = 0; i < this->nrOfWareHouses; i++)
+    this->nrOfTrucks = temp;
+    trucks = new Truck*[this->nrOfTrucks];
+    for(int i = 0; i < this->nrOfTrucks; i++)
     {
         mText = in.readLine();
+		mText = in.readLine();
         string temp1;
         temp1 = mText.toStdString();
+		float temp2 = mText.toFloat;
+		float temp3 = mText.toFloat;
 
         mText = in.readLine();
-        string temp2;
         temp2 = mText.toStdString();
-        wareHouses[i] = new WareHouse(temp2, temp1);
+        trucks[i] = new Truck(temp1, temp2, temp3);
     }
      in.flush();
-     */
 }
 
 void TruckHandler::saveToFile(string name)
 {
+	/*
 	std::ofstream myfile;
 	string tempName = name;
 	tempName += "Trucks.txt";
@@ -160,4 +162,27 @@ void TruckHandler::saveToFile(string name)
 		}
 		myfile.close();
 	}
+
+	*/
+
+	string tempName = "D:\\qt projects\\untitled\\";
+	tempName += name;
+	tempName += "Trucks.txt";
+
+	QFile saveFile("D:\\qt projects\\untitled\\WareHouses.txt");
+	if (!saveFile.open(QFile::WriteOnly | QFile::Text))
+	{
+		QMessageBox::information(0, "error", saveFile.errorString());
+		return;
+	}
+	QTextStream out(&saveFile);
+	out << this->nrOfWareHouses << endl;
+	for (int i = 0; i < this->nrOfWareHouses; i++)
+	{
+		QString temp;
+		// temp = QString::fromStdString(wareHouses[i]->getName());
+		out << QString::fromStdString(wareHouses[i]->getName()) << endl;
+		out << QString::fromStdString(wareHouses[i]->getId()) << endl;
+	}
+	saveFile.flush();
 }
