@@ -169,7 +169,7 @@ void TruckHandler::saveToFile(string name)
 	tempName += name;
 	tempName += "Trucks.txt";
 
-	QFile saveFile("D:\\qt projects\\untitled\\WareHouses.txt");
+	QFile saveFile(tempName);
 	if (!saveFile.open(QFile::WriteOnly | QFile::Text))
 	{
 		QMessageBox::information(0, "error", saveFile.errorString());
