@@ -2,7 +2,8 @@
 
 
 
-SoftBox::SoftBox() 
+SoftBox::SoftBox() :
+	Goods(id, weight)
 {
 }
 
