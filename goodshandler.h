@@ -19,6 +19,8 @@ public:
 	void addGoods(Goods*goods);
 	bool removeGoods(string id);
 	int getNrOfGoods()const;
+	void saveToFile(string fileName);
+	void readFromFile(string fileName);
 };
 
 #endif // GOODSHANDLER_H

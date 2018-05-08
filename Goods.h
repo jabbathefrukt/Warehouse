@@ -14,6 +14,7 @@ private:
 	string orderStatus;
 
 public:
+	Goods();
 	Goods(string id, float weight);
 	
 	string getId() const;

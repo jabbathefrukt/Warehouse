@@ -2,6 +2,12 @@
 
 
 
+Goods::Goods()
+{
+	this->id = "";
+	this->weight = 0;
+}
+
 Goods::Goods(string id, float weight)
 {
 	this->id = id;

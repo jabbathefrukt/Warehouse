@@ -8,15 +8,21 @@ class Database
 {
 private:
 	GoodsHandler goodsHandler;
+	string name;
+	int capacity;
+	int nrOfDestinations;
+	string destinations[];
 public:
-	Database();
+	Database(string name);
 	~Database();
 
 	void printToFile();
 	void updateInventory();
-	void addGoods(string id, float weight, string type);
-	void removeGoods(string id, float weight, string type);
-	void addDestination();
+	void addGoods(string id, float weight);
+	void removeGoods(string id);
+	void addDestination(string destination);
+
+	string getName();
 };
 
 #endif

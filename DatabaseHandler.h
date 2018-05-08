@@ -1,6 +1,7 @@
 #ifndef DATABASEHANDLER
 #define DATABASEHANDLER
 #include "database.h"
+#include "goodshandler.h"
 #include<string>
 #include<iostream>
 using namespace std;
@@ -15,6 +16,7 @@ public:
 	~DatabaseHandler();
 	
 	void addDatabase(string name);
+	void addNewGoods(string id,float weight);
 	bool deleteDatabase(string name);
 	Database*getDatabase(string name);
 	int getNrOfDb() const;

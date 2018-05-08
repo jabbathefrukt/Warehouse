@@ -46,3 +46,46 @@ int GoodsHandler:: getNrOfGoods()const
 {
 	return this->nrOfGoods;
 }
+
+void GoodsHandler::saveToFile(string filename)
+{
+	QString tempName = QString::fromStdString(fileName);
+	QFile saveFile(tempName);
+	if (!saveFile.open(QFile::WriteOnly | QFile::Text))
+	{
+		QMessageBox::information(0, "error", saveFile.errorString());
+		return;
+	}
+	QTextStream out(&saveFile);
+	out << this->nrOfDataBases << endl;
+	for (int i = 0; i < this->nrOfDataBases; i++)
+	{
+		QString temp;
+		// temp = QString::fromStdString(wareHouses[i]->getName());
+		out << QString::fromStdString(databases[i]->getName()) << endl;
+	}
+	saveFile.flush();
+}
+
+void GoodsHandler::readFromFile(string filename)
+{
+	QString tempName = QString::fromStdString(fileName);
+	QFile file(tempName);
+	if (!file.open(QIODevice::ReadOnly))
+	{
+		QMessageBox::information(0, "error", file.errorString());
+	}
+	QTextStream in(&file);
+	QString mText = in.readLine();
+	int temp = mText.toInt();
+	this->nrOfDataBases = temp;
+	databases = new Database*[this->nrOfDataBases];
+	for (int i = 0; i < this->nrOfDataBases; i++)
+	{
+		mText = in.readLine();
+		string name;
+		name = mText.toStdString();
+		databases[i] = new Database(name);
+	}
+	in.flush();
+}

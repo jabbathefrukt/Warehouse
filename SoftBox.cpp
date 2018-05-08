@@ -2,7 +2,7 @@
 
 
 
-SoftBox::SoftBox()
+SoftBox::SoftBox() 
 {
 }
 
