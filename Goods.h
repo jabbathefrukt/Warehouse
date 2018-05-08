@@ -15,7 +15,7 @@ private:
 
 public:
 	Goods();
-	Goods(string id, float weight);
+	Goods(string id, float weight, int expirationDate = 0, string destination = "", string orderStatus = "");
 	
 	string getId() const;
 	float getWeight() const;

@@ -4,11 +4,13 @@
 #include<string>
 #include<iostream>
 using namespace std;
+template<typename T>
 class Database
 {
 private:
 	GoodsHandler goodsHandler;
 	string name;
+
 	int capacity;
 	int nrOfDestinations;
 	string destinations[];

@@ -8,10 +8,14 @@ Goods::Goods()
 	this->weight = 0;
 }
 
-Goods::Goods(string id, float weight)
+Goods::Goods(string id, float weight, int expirationDate = 0, string destination = "", string orderStatus = "")
 {
 	this->id = id;
 	this->weight = weight;
+
+	this->expirationDate = expirationDate;
+	this->destination = destination;
+	this->orderStatus = orderStatus;
 }
 
 string Goods::getId() const
