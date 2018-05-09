@@ -41,7 +41,10 @@ void WareHouse::loadTruck(Goods * goods)
 
 Goods * WareHouse::getGoods(string id)
 {
-    return goodsHandler.selectGoods(id);
+	Goods* temp;
+	temp* = goodsHandler.selectGoods(id);
+	goodsHandler.removeGoods(id);
+    return temp;
 }
 
 string WareHouse::getId() const
