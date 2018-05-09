@@ -21,6 +21,7 @@ public:
     ~GoodsHandler();
     Goods* selectGoods(string id);
     void addGoods(Goods*goods);
+    void removeGoods(int pos);
     void addNewGoods(string id, float weight, int expirationDate, string destination, string orderStatus);
     bool removeGoods(string id);
     Goods* getGoodFromPos(int pos);

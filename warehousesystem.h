@@ -6,6 +6,7 @@ using namespace  std;
 #include"warehousewindow.h"
 #include<fstream>
 #include<ostream>
+#include"databasehandler.h"
 #include<QRegExp>
 #include<QMainWindow>
 #include"warehousehandler.h"
@@ -70,13 +71,17 @@ private slots:
 
     void on_trucksList_itemClicked(QListWidgetItem *item);
 
+    void on_addGoodsFromTruck_clicked();
+
 private:
     Ui::warehouseSystem *ui;
     warehouseWindow *warehouseW;
     WareHouse *currentWarehouse;
+    DatabaseHandler dHandler;
     Truck* activeTruck;
     QString warehouses;
     int nrOfWarehouses;
+    int truckGoodsLoaded;
     QStringList myList;
     WareHouseHandler wHandler;
     void disableSelectWarehouse(bool state);

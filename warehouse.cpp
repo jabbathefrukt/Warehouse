@@ -41,9 +41,9 @@ void WareHouse::loadTruck(Goods * goods)
 
 Goods * WareHouse::getGoods(string id)
 {
-	Goods* temp;
-	temp* = goodsHandler.selectGoods(id);
-	goodsHandler.removeGoods(id);
+    Goods* temp;
+    temp = goodsHandler.selectGoods(id);
+    goodsHandler.removeGoods(id);
     return temp;
 }
 

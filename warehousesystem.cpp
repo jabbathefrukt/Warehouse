@@ -10,6 +10,7 @@ warehouseSystem::warehouseSystem(QWidget *parent) :
     //this->databaseHandler.loadDatabases();
     this->nrOfWarehouses=0;
     this->warehouses="";
+    this->truckGoodsLoaded=0;
     ui->setupUi(this);
     int id=100;
     for(int i=0;i<this->wHandler.getNrOfWareHouses();i++)
@@ -82,6 +83,10 @@ void warehouseSystem::disableSelectWarehouse(bool state)
 }
 void warehouseSystem::disableWarehouseMng(bool state)
 {
+    this->ui->addGoodsFromTruck->setDisabled(state);
+    this->ui->warehouseGoodsLbl->setDisabled(state);
+    this->ui->tableForTrucks->setDisabled(state);
+    this->ui->truckGoodsLbl->setDisabled(state);
     this->ui->addGoodToWBtn->setDisabled(state);
     this->ui->addNameGoodLbl->setDisabled(state);
     this->ui->addNameGoodLine->setDisabled(state);
@@ -123,7 +128,7 @@ void warehouseSystem::removeWareHouse(std::string id)
 void warehouseSystem::addGoodsWareHouse(std::string id)
 {
 
-  //this->currentWarehouse->addGoods(//this->dataBAse.getGood(id));
+  //this->currentWarehouse->addGoods();
 }
 
 void warehouseSystem::removeGoods(std::string name, int nrOfGoods)
@@ -168,12 +173,15 @@ void warehouseSystem::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
     warehouseW->show();
     */
     std::string name = item->text().toLocal8Bit().constData();
-
+    this->ui->tableForTrucks->clearContents();
+    //this->ui->tableForWarehouse->clear();
+    this->ui->tableForWarehouse->clearContents();
     this->selectWareHouse(name);
     this->disableSelectWarehouse(true);
     this->disableWarehouseMng(false);
     this->setWindowTitle(item->text());
     this->ui->tableForWarehouse->setRowCount(100);
+    this->ui->tableForTrucks->setRowCount(100);
     this->ui->trucksList->clear();
     this->ui->trucksComboBox->clear();
     //Sätter listan med trucksen, truckcombobox och listan med alla goods till det currentwarehouse har
@@ -195,10 +203,28 @@ void warehouseSystem::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
         QTableWidgetItem *temp=new QTableWidgetItem(QString::fromStdString(ptr->getId()));
         this->ui->tableForWarehouse->setItem(i,0,temp);
         QTableWidgetItem *temp2=new QTableWidgetItem(QString::fromStdString(ptr->getDest()));
-        this->ui->tableForWarehouse->setItem(i,2,temp2);
+        this->ui->tableForWarehouse->setItem(i,1,temp2);
 
     }
+    int row=0;
+    for(int i=0;i<this->currentWarehouse->getNrOfTrucks();i++)
+    {
 
+        Truck *truckPtr=this->currentWarehouse->getTruckFromPos(i);
+        for(int j=0;j<this->currentWarehouse->getTruckFromPos(i)->getNrOfGoods();j++)
+        {
+            Goods *ptr=this->currentWarehouse->getTruckFromPos(i)->getGoodFromPos(j);
+
+            QTableWidgetItem *temp=new QTableWidgetItem(QString::fromStdString(truckPtr->getId()));
+            this->ui->tableForTrucks->setItem(row,0,temp);
+            QTableWidgetItem *temp2=new QTableWidgetItem(QString::fromStdString(ptr->getId()));
+            this->ui->tableForTrucks->setItem(row,1,temp2);
+            QTableWidgetItem *temp3=new QTableWidgetItem(QString::fromStdString(ptr->getDest()));
+            this->ui->tableForTrucks->setItem(row,2,temp3);
+            row++;
+            this->truckGoodsLoaded++;
+        }
+    }
     //this->currentWarehouse->getNrOfGoods());
     //this->ui->tableForWarehouse->setItem(1,1,temp);
     //this->showMaximized();
@@ -227,28 +253,31 @@ void warehouseSystem::on_addWarehouseBtn_clicked()
 
 void warehouseSystem::on_saveWarehousesBtn_clicked()
 {
-    this->ui->tableForWarehouse->setRowCount(11);
     //this->saveWarehouses();
+
 }
 
 void warehouseSystem::on_addGoodToWBtn_clicked()
 {
-   if(this->ui->addNameGoodLine->text()!=QString("")&&this->ui->quanityLine->text()!=QString(""))
+   std::string name = this->ui->addNameGoodLine->text().toLocal8Bit().constData();
+   Goods *ptr=this->dHandler.getDatabase("Hej")->searchAndReturnGoods(name);
+   if(this->ui->addNameGoodLine->text()!=QString("")&&ptr!=nullptr)
    {
        QString goodname=this->ui->addNameGoodLine->text();
        //QString nrOfGoodsToAdd=this->ui->quanityLine->text();
        std::string name = goodname.toLocal8Bit().constData();
-
-       this->addGoodsWareHouse(name);
-
-
+       Goods *temp=new Goods(*ptr);
+       //this->addGoodsWareHouse(name);
+       this->currentWarehouse->addGoods(temp);
+       temp=nullptr;
+       ptr=nullptr;
        QString truckID=this->ui->trucksComboBox->currentText();
 
        QTableWidgetItem *item=new QTableWidgetItem(goodname);
        QTableWidgetItem *destination=new QTableWidgetItem(this->ui->addGoodsDestLine->text());
        //QTableWidgetItem *goodsToAdd=new QTableWidgetItem(nrOfGoodsToAdd);
        this->ui->tableForWarehouse->setItem(this->currentWarehouse->getNrOfGoods(),0,item);
-       this->ui->tableForWarehouse->setItem(this->currentWarehouse->getNrOfGoods(),2,destination);
+       //this->ui->tableForWarehouse->setItem(this->currentWarehouse->getNrOfGoods(),2,destination);
        //this->ui->tableForWarehouse->setItem(this->currentWarehouse->getNrOfGoods(),2,QString::fromStdString(this->currentWarehouse->getGoods(goodname)->getOrderStatus()));
        this->ui->addNameGoodLine->clear();
        this->ui->quanityLine->clear();
@@ -258,21 +287,18 @@ void warehouseSystem::on_addGoodToWBtn_clicked()
 
 void warehouseSystem::on_loadToTruckBtn_clicked()
 {
-    if(this->ui->addNameGoodLine->text()!=QString("")&&this->ui->quanityLine->text()!=QString("")&&this->ui->addGoodsDestLine->text()!=QString("")
+    if(this->ui->addNameGoodLine->text()!=QString("")&&this->ui->addGoodsDestLine->text()!=QString("")
             &&this->ui->trucksComboBox->currentText()!=QString(""))
     {
 
         QString goodname=this->ui->addNameGoodLine->text();
+        string goodNamestr=goodname.toLocal8Bit().constData();
         std::string truckID =this->ui->trucksComboBox->currentText().toLocal8Bit().constData();
         QString destination=this->ui->addGoodsDestLine->text();
-        this->currentWarehouse->loadTruck(this->currentWarehouse->getGoods(goodname));
-        //Good *temp=this->databaseHandler->goods->get(goodname);
-        //QString::fromStdString name (temp->getName());
-        //QString::fromStdString destination (temp->getDestination());
-        //QString::fromStdString location (temp->getLocation());
-        //this->currentWarehouse->goodsHandler.addGoods(QString::toStdString(goodname));
+
+        this->selectTruck(truckID);
         int pos=-1;
-        for(int i=0;i<10;i++)
+        for(int i=0;i<this->currentWarehouse->getNrOfGoods();i++)
         {
             if(this->ui->tableForWarehouse->item(i,0)!=nullptr)
             {
@@ -283,15 +309,33 @@ void warehouseSystem::on_loadToTruckBtn_clicked()
                 }
             }
 
-        }
 
-        if(pos!=-1)
-        {
-            QTableWidgetItem *truckItem=new QTableWidgetItem(truckID);
-            QTableWidgetItem *goodDestination=new QTableWidgetItem(destination);
-            this->ui->tableForWarehouse->setItem(pos,2,goodDestination);
-            this->ui->tableForWarehouse->setItem(pos,4,truckItem);
         }
+        //this->activeTruck->loadGood(this->currentWarehouse->getGoods(goodNamestr));
+        Goods *ptr=this->currentWarehouse->getGoods(goodNamestr);
+
+        if(ptr==nullptr)
+        {
+
+
+        }
+        else
+        {
+            std::string destStr =destination.toLocal8Bit().constData();
+
+            //ptr->setDest(destStr);
+            this->activeTruck->loadGood(ptr);
+            this->activeTruck->getGoodFromPos(this->activeTruck->getNrOfGoods()-1)->setDest(destStr);
+            this->ui->tableForWarehouse->removeRow(pos);
+            QTableWidgetItem *truckIDN=new QTableWidgetItem(QString::fromStdString(truckID));
+            QTableWidgetItem *good=new QTableWidgetItem(goodname);
+            QTableWidgetItem *destinationFGood=new QTableWidgetItem(destination);
+            this->ui->tableForTrucks->setItem(this->truckGoodsLoaded,0,truckIDN);
+            this->ui->tableForTrucks->setItem(this->truckGoodsLoaded,1,good);
+            this->ui->tableForTrucks->setItem(this->truckGoodsLoaded,2,destinationFGood);
+            this->truckGoodsLoaded++;
+        }
+        ptr=nullptr;
         this->ui->addNameGoodLine->clear();
         this->ui->quanityLine->clear();
         this->ui->addGoodsDestLine->clear();
@@ -316,6 +360,7 @@ void warehouseSystem::on_changeWarehouseBtn_clicked()
 {
     this->disableSelectWarehouse(false);
     this->disableWarehouseMng(true);
+    this->truckGoodsLoaded=0;
     this->currentWarehouse=nullptr;
 }
 
@@ -366,6 +411,7 @@ void warehouseSystem::on_removeGoodBtn_clicked()
 
 void warehouseSystem::on_removeTruckBtn_clicked()
 {
+    //QString temp=this->ui->removeTruckBtn->text();
 
 }
 
@@ -400,4 +446,61 @@ void warehouseSystem::on_trucksList_itemClicked(QListWidgetItem *item)
     std::string id;
     std::getline(truckInfo,id,' ');
     this->selectTruck(id);
+}
+
+void warehouseSystem::on_addGoodsFromTruck_clicked()
+{
+    if(this->ui->addNameGoodLine->text()!=QString("")
+            &&this->ui->trucksComboBox->currentText()!=QString(""))
+    {
+
+        QString goodname=this->ui->addNameGoodLine->text();
+        QString truckIDQString=this->ui->trucksComboBox->currentText();
+        string goodNamestr=goodname.toLocal8Bit().constData();
+        std::string truckID =this->ui->trucksComboBox->currentText().toLocal8Bit().constData();
+
+        this->selectTruck(truckID);
+        int pos=-1;
+        for(int i=0;i<this->truckGoodsLoaded&&pos==-1;i++)
+        {
+            if(this->ui->tableForTrucks->item(i,0)!=nullptr)
+            {
+                QString tempTruck=this->ui->tableForTrucks->item(i,0)->text();
+                QString tempGood=this->ui->tableForTrucks->item(i,1)->text();
+                if(tempTruck == truckIDQString&&tempGood==goodname)
+                {
+                    pos=i;
+                }
+            }
+
+
+        }
+        //this->activeTruck->loadGood(this->currentWarehouse->getGoods(goodNamestr));
+        Goods *ptr=this->activeTruck->getGoods(goodNamestr);
+
+        if(ptr==nullptr)
+        {
+
+
+        }
+        else
+        {
+            //std::string destStr =destination.toLocal8Bit().constData();
+
+            //ptr->setDest(destStr);
+            this->currentWarehouse->addGoods(ptr);
+            //this->currentWarehouse->getGoodFromPos(this->activeTruck->getNrOfGoods()-1)->setDest(destStr);
+            this->ui->tableForTrucks->removeRow(pos);
+            QTableWidgetItem *truckIDN=new QTableWidgetItem(QString::fromStdString(truckID));
+            QTableWidgetItem *good=new QTableWidgetItem(goodname);
+           // QTableWidgetItem *destinationFGood=new QTableWidgetItem(destination);
+            this->ui->tableForWarehouse->setItem(this->currentWarehouse->getNrOfGoods()-1,0,good);
+
+            this->truckGoodsLoaded--;
+        }
+        ptr=nullptr;
+        this->ui->addNameGoodLine->clear();
+        this->ui->quanityLine->clear();
+        this->ui->addGoodsDestLine->clear();
+    }
 }

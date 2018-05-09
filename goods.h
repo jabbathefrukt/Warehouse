@@ -16,7 +16,8 @@ private:
 public:
     Goods();
     Goods(string id, float weight, int expirationDate, string destination, string orderStatus);
-
+    Goods(const Goods & obj);
+    void operator=(const Goods & obj);
     string getId() const;
     float getWeight() const;
     int getExperationDate() const;

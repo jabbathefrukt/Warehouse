@@ -22,8 +22,10 @@ void GoodsHandler::expand()
 
 Goods * GoodsHandler::selectGoods(string id)
 {
-    for (int i = 0; i < nrOfGoods; i++) {
-        if (goods[i]->getId() == id) {
+    for (int i = 0; i < nrOfGoods; i++)
+    {
+        if (goods[i]->getId() == id)
+        {
             return goods[i];
         }
     }
@@ -43,6 +45,11 @@ Goods* GoodsHandler::getGoodFromPos(int pos)
         return nullptr;
     }
     return this->goods[pos];
+}
+void GoodsHandler::removeGoods(int pos)
+{
+    this->goods[pos]=nullptr;
+    this->goods[pos]=this->goods[--nrOfGoods];
 }
 void GoodsHandler::addNewGoods(string id, float weight, int expirationDate=0, string destination="", string orderStatus="")
 {

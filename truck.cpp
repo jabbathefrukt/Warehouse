@@ -28,10 +28,10 @@ int Truck::getNrOfGoods()const
 }
 Goods * Truck::getGoods(string id)
 {
-	Goods* temp;
-	temp* = goodsHandler.selectGoods(id);
-	goodsHandler.removeGoods(id);
-	return temp;
+    Goods* temp;
+    temp = goodsHandler.selectGoods(id);
+    goodsHandler.removeGoods(id);
+    return temp;
 }
 
 void Truck::changeDestination(string destination)

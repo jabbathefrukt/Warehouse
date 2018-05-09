@@ -12,12 +12,29 @@ Goods::Goods(string id, float weight, int expirationDate = 0, string destination
 {
     this->id = id;
     this->weight = weight;
-
     this->expirationDate = expirationDate;
     this->destination = destination;
     this->orderStatus = orderStatus;
 }
-
+Goods::Goods(const Goods & obj)
+{
+  this->destination=obj.destination;
+  this->expirationDate=obj.expirationDate;
+    this->id=obj.id;
+    this->orderStatus=obj.orderStatus;
+    this->weight=obj.weight;
+}
+void Goods::operator=(const Goods & obj)
+{
+    if(this!=&obj)
+    {
+        this->id=obj.id;
+        this->destination=obj.destination;
+        this->expirationDate=obj.expirationDate;
+        this->orderStatus=obj.orderStatus;
+        this->weight=obj.weight;
+    }
+}
 string Goods::getId() const
 {
     return this->id;
