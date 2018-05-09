@@ -16,9 +16,9 @@ void DatabaseHandler::addDatabase(string name)
 	databases[nrOfDataBases++] = new Database(name);
 }
 
-void DatabaseHandler::addNewGoods(string id,float weight)
+void DatabaseHandler::addNewGoods(string id, float weight, int expirationDate, string destination, string orderStatus, int i)
 {
-	Goods*good = new Goods(id, weight);
+	this->databases[i]->addGoods(id, weight, expirationDate, destination, orderStatus);
 }
 
 bool DatabaseHandler::deleteDatabase(string name)
@@ -91,4 +91,14 @@ void DatabaseHandler::readFromFile(string fileName)
 		databases[i] = new Database(name);
 	}
 	in.flush();
+}
+
+void DatabaseHandler::saveDatabaseToFile(string fileName, string name, int id)
+{
+	databases[id]->saveToFile(fileName, name);
+}
+
+void DatabaseHandler::readDatabaseFromFile(string fileName, string name, int id)
+{
+	databases[id]->readFromFile(fileName, name);
 }
