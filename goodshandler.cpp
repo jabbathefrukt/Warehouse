@@ -36,7 +36,8 @@ Goods * GoodsHandler::selectGoods(string id)
 void GoodsHandler:: addGoods(Goods*goods)
 {
     //expand;
-        this->goods[nrOfGoods++] = goods;
+        this->goods[nrOfGoods] = goods;
+    this->nrOfGoods++;
 }
 Goods* GoodsHandler::getGoodFromPos(int pos)
 {

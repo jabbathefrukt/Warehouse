@@ -1,16 +1,16 @@
-4
+6
 
-Lok
-0
-0
-rono
-uno
-
-Walk
+bord
 30
 30
 Polen
 kalle
+
+Lok
+0
+0
+Polen
+uno
 
 Lop
 0
@@ -18,8 +18,20 @@ Lop
 rono
 uno
 
-bord
-30
-30
+Ham
+0
+0
 Polen
-kalle
+uno
+
+
+0
+0
+
+
+
+
+0
+0
+
+

@@ -268,9 +268,7 @@ void warehouseSystem::on_addGoodToWBtn_clicked()
        std::string name = goodname.toLocal8Bit().constData();
        Goods *temp=new Goods(*ptr);
        //this->addGoodsWareHouse(name);
-       this->currentWarehouse->addGoods(temp);
-       temp=nullptr;
-       ptr=nullptr;
+
        QString truckID=this->ui->trucksComboBox->currentText();
 
        QTableWidgetItem *item=new QTableWidgetItem(goodname);
@@ -279,6 +277,9 @@ void warehouseSystem::on_addGoodToWBtn_clicked()
        this->ui->tableForWarehouse->setItem(this->currentWarehouse->getNrOfGoods(),0,item);
        //this->ui->tableForWarehouse->setItem(this->currentWarehouse->getNrOfGoods(),2,destination);
        //this->ui->tableForWarehouse->setItem(this->currentWarehouse->getNrOfGoods(),2,QString::fromStdString(this->currentWarehouse->getGoods(goodname)->getOrderStatus()));
+       this->currentWarehouse->addGoods(temp);
+        temp=nullptr;
+       ptr=nullptr;
        this->ui->addNameGoodLine->clear();
        this->ui->quanityLine->clear();
    }
@@ -323,8 +324,11 @@ void warehouseSystem::on_loadToTruckBtn_clicked()
         {
             std::string destStr =destination.toLocal8Bit().constData();
 
-            //ptr->setDest(destStr);
             this->activeTruck->loadGood(ptr);
+            if(this->activeTruck->getGoodFromPos(this->activeTruck->getNrOfGoods()-1)==nullptr)
+            {
+                //ptr->setDest(destStr);
+            }
             this->activeTruck->getGoodFromPos(this->activeTruck->getNrOfGoods()-1)->setDest(destStr);
             this->ui->tableForWarehouse->removeRow(pos);
             QTableWidgetItem *truckIDN=new QTableWidgetItem(QString::fromStdString(truckID));

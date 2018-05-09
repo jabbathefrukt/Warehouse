@@ -20,9 +20,9 @@ Goods::Goods(const Goods & obj)
 {
   this->destination=obj.destination;
   this->expirationDate=obj.expirationDate;
-    this->id=obj.id;
-    this->orderStatus=obj.orderStatus;
-    this->weight=obj.weight;
+  this->id=obj.id;
+  this->orderStatus=obj.orderStatus;
+  this->weight=obj.weight;
 }
 void Goods::operator=(const Goods & obj)
 {
