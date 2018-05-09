@@ -18,8 +18,9 @@ private:
 
 public:
     Truck(string id, float maxWeight, float volume);
-	~Truck();
-
+    ~Truck();
+    int getNrOfGoods()const;
+    Goods* getGoodFromPos(int pos);
     void loadGood(Goods* goods);
     Goods* getGoods(string id);
     void changeDestination(string destination);

@@ -13,12 +13,13 @@ private:
     int nrOfWareHouses;
     int capacity;
     WareHouse** wareHouses;
-    
+
 public:
     WareHouseHandler(int capacity);
-	~WareHouseHandler();
+    WareHouseHandler();
+    ~WareHouseHandler();
     WareHouse* selectWareHouse(string id);
-    void addWareHouse(string id, string name);
+    bool addWareHouse(string id, string name);
     bool removeWareHouse(string id);
     int getNrOfWareHouses()const;
     void loadWareHousesFromFile();

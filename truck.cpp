@@ -2,46 +2,56 @@
 
 Truck::Truck(string id, float maxWeight, float volume)
 {
-	this->id = id;
-	this->maxWeight = maxWeight;
-	this->volume = volume;
+    this->id = id;
+    this->maxWeight = maxWeight;
+    this->volume = volume;
+    this->goodsHandler.readFromFile("D:\\program\\warehouseSystem\\",this->id);
 }
 
 Truck::~Truck()
 {
+    this->goodsHandler.saveToFile("D:\\program\\warehouseSystem\\",this->id);
 }
 
 void Truck::loadGood(Goods * goods)
 {
-	this->goodsHandler.addGoods(goods);
+    this->goodsHandler.addGoods(goods);
 }
 
+Goods* Truck::getGoodFromPos(int pos)
+{
+    return this->goodsHandler.getGoodFromPos(pos);
+}
+int Truck::getNrOfGoods()const
+{
+    return this->goodsHandler.getNrOfGoods();
+}
 Goods * Truck::getGoods(string id)
 {
-	return goodsHandler.selectGoods(id);
+    return goodsHandler.selectGoods(id);
 }
 
 void Truck::changeDestination(string destination)
 {
-	this->destination = destination;
+    this->destination = destination;
 }
 
 string Truck::getDestination() const
 {
-	return this->destination;
+    return this->destination;
 }
 
 float Truck::getVolume() const
 {
-	return this->volume;
+    return this->volume;
 }
 
 float Truck::getMaxWeight() const
 {
-	return this->maxWeight;
+    return this->maxWeight;
 }
 
 string Truck::getId() const
 {
-	return this->id;
+    return this->id;
 }

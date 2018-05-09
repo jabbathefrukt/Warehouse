@@ -3,25 +3,30 @@
 #include "goods.h"
 #include<string>
 #include<iostream>
+#include<QFile>
+#include<QTextStream>
+#include<QMessageBox>
+#include<qdebug.h>
 using namespace std;
 class GoodsHandler
 {
 private:
-	int nrOfGoods;
-	Goods** goods;
-	int capacity;
+    int nrOfGoods;
+    Goods** goods;
+    int capacity;
 
-	void expand();
+    void expand();
 public:
-	GoodsHandler();
-
-	Goods* selectGoods(string id);
-	void addGoods(Goods*goods);
-	void addNewGoods(string id, float weight, int expirationDate = 0, string destination = 0, string orderStatus = 0);
-	bool removeGoods(string id);
-	int getNrOfGoods()const;
-	void saveToFile(string fileName, string name);
-	void readFromFile(string fileName, string name);
+    GoodsHandler();
+    ~GoodsHandler();
+    Goods* selectGoods(string id);
+    void addGoods(Goods*goods);
+    void addNewGoods(string id, float weight, int expirationDate, string destination, string orderStatus);
+    bool removeGoods(string id);
+    Goods* getGoodFromPos(int pos);
+    int getNrOfGoods()const;
+    void saveToFile(string fileName, string name);
+    void readFromFile(string fileName, string name);
 };
 
 #endif // GOODSHANDLER_H

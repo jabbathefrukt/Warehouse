@@ -3,17 +3,21 @@
 TruckHandler::TruckHandler(int capacity)
 {
     this->capacity = capacity;
+    trucks = new Truck*[capacity];
+
     //this->nrOfTrucks = 0; // vet inte om det kommer gå emot min readfrom file
 }
 
 TruckHandler::~TruckHandler()
 {
+    //this->saveToFile();
     for (int i = 0; i < this->nrOfTrucks; i++)
     {
         delete trucks[i];
     }
     delete[] trucks;
 }
+
 
 Truck * TruckHandler::selectTruck(string id)
 {
@@ -36,6 +40,17 @@ Truck * TruckHandler::selectTruck(string id)
     }
 }
 
+Truck* TruckHandler::getTruckFromPos(int pos)
+{
+    if(pos<0||pos>this->nrOfTrucks)
+    {
+        return nullptr;
+    }
+    else
+    {
+        return this->trucks[pos];
+    }
+}
 bool TruckHandler::addTruck(string id, float maxW, float volume)
 {
     bool temp = false;
@@ -52,6 +67,7 @@ bool TruckHandler::addTruck(string id, float maxW, float volume)
         if (idExist == false)
         {
             trucks[nrOfTrucks] = new Truck(id, maxW, volume);
+            this->nrOfTrucks++;
             temp = true;
         }
     }
@@ -110,8 +126,7 @@ void TruckHandler::readFromFile(string name)
     }
     openFile.close();
     */
-
-
+    this->nrOfTrucks=0;
     string tempName = "D:\\program\\warehouseSystem\\";
     tempName+= name;
     tempName += "Trucks.txt";
@@ -121,27 +136,33 @@ void TruckHandler::readFromFile(string name)
     {
         QMessageBox::information(0,"error",file.errorString());
     }
-    QTextStream in(&file);
-    QString mText = in.readLine();
-    int temp = mText.toInt();
-    this->nrOfTrucks = temp;
-    trucks = new Truck*[this->nrOfTrucks];
-    for(int i = 0; i < this->nrOfTrucks; i++)
+    else
     {
-        mText = in.readLine();
-        mText = in.readLine();
-        string temp1;
-        temp1 = mText.toStdString();
-        mText = in.readLine();
-        float temp2 = mText.toFloat();
-        mText = in.readLine();
-        float temp3 = mText.toFloat();
+        QTextStream in(&file);
+        QString mText = in.readLine();
+        int temp = mText.toInt();
+        this->nrOfTrucks = temp;
+        for(int i = 0; i < this->nrOfTrucks; i++)
+        {
+            mText = in.readLine();
+            mText = in.readLine();
+            string temp1;
+            temp1 = mText.toStdString();
+            mText = in.readLine();
+            float temp2 = mText.toFloat();
+            mText = in.readLine();
+            float temp3 = mText.toFloat();
 
-        //mText = in.readLine();
-        //temp2 = mText.toStdString();
-        trucks[i] = new Truck(temp1, temp2, temp3);
+            //mText = in.readLine();
+            //temp2 = mText.toStdString();
+            trucks[i] = new Truck(temp1, temp2, temp3);
+        }
+
+
+
+    in.flush();
+
     }
-     in.flush();
 }
 
 void TruckHandler::saveToFile(string name)

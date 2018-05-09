@@ -18,17 +18,22 @@ private:
     Truck* activeTruck;
 public:
     WareHouse(string id, string name);
-	~WareHouse();
+    ~WareHouse();
     bool findGoods(string id);
-	void loadTruck(Goods* goods);
+    int getNrOfTrucks()const;
+    int getNrOfGoods()const;
+    Goods* getGoodFromWarehousePos(int pos);
+    Goods* getGoodFromTruckPos(int pos);
+    void loadTruck(Goods* goods);
     Goods* getGoods(string id);
     string getId()const;
     bool addTruck(string id, float maxW, float volume);
     bool removeTruck(string id);
-    void addGoods(string id);
+    void addGoods(Goods* ptr);
     bool removeGoods();
     Truck* selecetTruck(string id);
-	string getName()const;
+    Truck* getTruckFromPos(int pos);
+    string getName()const;
 };
 
 #endif // WAREHOUSE_H
